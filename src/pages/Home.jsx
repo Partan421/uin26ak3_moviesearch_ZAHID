@@ -1,18 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import History from "../components/History"
 
 export default function Home(){
 
     const [search, setSearch] = useState()
+    const storedHistory = localStorage.getItem("search")
+    const [history, setHistory] = useState(storedHistory ? JSON.parse(storedHistory) : [])
+    const [focused, setFocused] = useState(false) 
+
+    console.log("Denne kommer fra storage", storedHistory)
     
     const baseUrl = `http://www.omdbapi.com/?s=${search}&apikey=`
     
-    const apiKey = 'afafd1ed'
+    const apiKey = import.meta.env.VITE_APP_API_KEY
+
+    useEffect(() =>{
+        localStorage.setItem("search", JSON.stringify(history))
+    },[history])
 
     const getMovies = async() => {
         try
         {
             const response = await fetch(`${baseUrl}${apiKey}`)
-            const data = response.json()
+            const data = await response.json()
             console.log(data)
         }
         catch(err){
@@ -24,16 +34,31 @@ export default function Home(){
         setSearch(e.target.value)
     }
 
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        e.target.reset()
+        
+        setHistory((prev) => [...prev, search])
+    }
+
+    console.log(history )
+
     return (
         <main>
             <h1>Forside</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label>
                     Søk etter film: 
-                    <input type="search" placeholder="Jatt James Bond" onChange={handleChange} ></input>
+                    <input type="search" 
+                        placeholder="Jatt James Bond" 
+                        onChange={handleChange}
+                        onFocus={() => setFocused(true)}
+                        /*onBlur={() => setFocused(false)}*/ > 
+                    </input>
                 </label>
+                {focused ? <History history={history} setSearch={setSearch}/> : null }
+                <button onClick={getMovies}>Hent Film</button>
             </form>
-            <button onClick={getMovies}>Hent Film</button>
         </main>
 )
 }
