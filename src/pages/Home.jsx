@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import History from "../components/History"
+import MovieList from "../components/MovieList"
 
 export default function Home(){
 
     const [search, setSearch] = useState()
     const storedHistory = localStorage.getItem("search")
     const [history, setHistory] = useState(storedHistory ? JSON.parse(storedHistory) : [])
-    const [focused, setFocused] = useState(false) 
+    const [focused, setFocused] = useState(false)
+
+    const [movies, SetMovies] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
 
     console.log("Denne kommer fra storage", storedHistory)
     
@@ -17,6 +22,28 @@ export default function Home(){
     useEffect(() =>{
         localStorage.setItem("search", JSON.stringify(history))
     },[history])
+
+    useEffect(() => {
+        const getBondMovies = async() => {
+            try{
+                setLoading(true)
+                setError(null)
+
+                const response = await fetch('https://www.omdbapi.com/?s=james%20bond&type=movie&apikey=${apiKey}')
+                const data = await response.json
+
+                if (data.Response === "True") {
+                    SetMovies(data.Search)
+                } else {
+                    setError("Kunne ikke hente James Bond filmer")
+                }
+            } catch (err) {
+                setError("noe gikk galt med API-kallet")
+            } finally {
+                setLoading(false)
+            }
+        }
+    })
 
     const getMovies = async() => {
         try
