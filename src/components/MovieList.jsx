@@ -5,7 +5,7 @@ export default function MovieList({movies}){
         <section>
             <h2>Filmer</h2>
             <ul>
-                {movies.map(movie => (
+                {movies?.map(movie => (
                     <MovieListItem key={movie.imdbID} movie={movie} />
                 ))}
             </ul>

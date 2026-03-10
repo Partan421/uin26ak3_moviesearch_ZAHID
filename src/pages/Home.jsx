@@ -5,13 +5,16 @@ import MovieList from "../components/MovieList"
 export default function Home(){
 
     const [search, setSearch] = useState("")
+
     const storedHistory = localStorage.getItem("search")
+    
     const [history, setHistory] = useState(storedHistory ? JSON.parse(storedHistory) : [])
     const [focused, setFocused] = useState(false)
 
     const [movies, setMovies] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+
 
     const apiKey = import.meta.env.VITE_APP_API_KEY
 

@@ -14,11 +14,10 @@ export default function MovieListItem({movie}){
                     </h3>
                     <p>{movie.Year}</p>
                 </header>
+                <section>
                     {movie.Poster && movie.Poster !== "N/A"
                     ? <img src={movie.Poster} alt={`Poster for ${movie.Title}`} />
                     : null}
-                <section>
-
                 </section>
             </article>
         </li>
