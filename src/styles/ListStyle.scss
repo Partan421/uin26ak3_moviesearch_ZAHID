@@ -1,0 +1,19 @@
+.movie-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    list-style: none;
+    justify-content: center;
+}
+
+.movie-list li{
+    flex: calc(25% - 1.5rem);
+    max-width: 300px;
+}
+
+.movie-list img{
+    width: 100%;
+    border-radius: 6px;
+    display: block;
+}

@@ -1,3 +1,5 @@
+import '../styles/Inputfelt.scss'
+
 export default function History({history, setSearch}){
     
     const handleChange = (e) => {
@@ -9,7 +11,7 @@ export default function History({history, setSearch}){
     }
 
     return(
-        <label>
+        <label className='input'>
             Tidligere søk:
             <select onChange={handleChange}>
                 <option value="">Velg et tidligere søk</option>

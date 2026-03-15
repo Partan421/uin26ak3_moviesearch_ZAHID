@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import History from "../components/History"
-import MovieList from "../components/MovieList"
+import History from "../components/History";
+import MovieList from "../components/MovieList";
+import "../styles/Inputfelt.scss";
 
 export default function Home(){
 
@@ -93,13 +94,13 @@ export default function Home(){
     return (
         <main>
             <header>
-                <h1>Forside</h1>
+                <h1>Film Søk</h1>
             </header>
 
             <section>
                 <form onSubmit={handleSubmit}>
-                    <label>
-                        Søk etter film: 
+                    <label className="input">
+                        Søk etter film:  
                         <input 
                             type="search" 
                             placeholder="James Bond"
